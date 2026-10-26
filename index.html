@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pista House – Junk Food, Done Right</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="logo"><i>P</i>Pista House</a>
+    <nav class="links" aria-label="Main">
+      <a href="#menu">Menu</a><a href="#offer">Offers</a><a href="#contact">Contact</a>
+    </nav>
+    <button class="cart-btn" id="openCart" aria-label="Open cart">🛒 Cart <b id="count">0</b></button>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Crispy. Cheesy. Totally green-lit.</h1>
+        <p>Burgers, pizzas and loaded fries made fresh and delivered hot. Pick what you crave and we will handle the rest.</p>
+        <a href="#menu" class="cta">Order now</a><a href="#offer" class="cta2">See today’s offer</a>
+      </div>
+      <div class="stack">
+        <div class="blob"></div>
+        <div class="ph s0" data-label="Smash burger"><img src="images/smash-burger.jpg" alt="Classic smash burger"></div>
+        <div class="ph s1" data-label="Pizza"><img src="images/margherita-pizza.jpg" alt="Margherita pizza"></div>
+        <div class="ph s2" data-label="Fries"><img src="images/cheese-fries.jpg" alt="Loaded cheese fries"></div>
+        <div class="ph s3" data-label="Shake"><img src="images/pista-shake.jpg" alt="Pista shake"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true"><div id="mq"></div></div>
+
+  <section id="menu">
+    <div class="wrap">
+      <h2>Our menu</h2>
+      <p class="sub">Tap a category, then add your favourites to the cart.</p>
+      <div class="tabs" id="tabs"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="offer" id="offer">
+    <div class="wrap">
+      <div class="box">
+        <div>
+          <h2>Get 20% off your first order</h2>
+          <p>Use this code at checkout on orders above ₹300.</p>
+        </div>
+        <div class="code">PISTA20</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div><h4>Pista House</h4><p>Fresh junk food, made with love.</p></div>
+    <div><h4>Open daily</h4><p>11:00 AM – 11:30 PM</p></div>
+    <div><h4>Order by phone</h4><p>+91 00000 00000</p></div>
+  </div>
+  <p class="copy">© 2026 Pista House. All rights reserved.</p>
+</footer>
+
+<div class="veil" id="veil"></div>
+<aside class="drawer" id="drawer" aria-label="Your cart">
+  <div class="dh"><h3>Your cart</h3><button class="x" id="closeCart" aria-label="Close cart">✕</button></div>
+  <div class="items" id="items"></div>
+  <div class="foot">
+    <div class="tot"><span>Total</span><span id="total">₹0</span></div>
+    <button class="pay" id="pay" disabled>Place order</button>
+  </div>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const MENU=[
+ {id:1,n:"Classic Smash Burger",d:"Double smashed patty, cheese, pickles.",p:149,c:"Burgers",i:"smash-burger"},
+ {id:2,n:"Crispy Chicken Burger",d:"Golden fried chicken with spicy mayo.",p:179,c:"Burgers",i:"chicken-burger"},
+ {id:3,n:"Paneer Tikka Burger",d:"Grilled paneer, mint chutney, onions.",p:159,c:"Burgers",i:"paneer-burger"},
+ {id:4,n:"Margherita Pizza",d:"Tomato, mozzarella and fresh basil.",p:249,c:"Pizza",i:"margherita-pizza"},
+ {id:5,n:"Pepperoni Pizza",d:"Loaded with pepperoni and extra cheese.",p:299,c:"Pizza",i:"pepperoni-pizza"},
+ {id:6,n:"Farmhouse Pizza",d:"Capsicum, corn, olives and mushrooms.",p:279,c:"Pizza",i:"farmhouse-pizza"},
+ {id:7,n:"Loaded Cheese Fries",d:"Crinkle fries under molten cheese.",p:129,c:"Sides",i:"cheese-fries"},
+ {id:8,n:"Peri Peri Fries",d:"Crisp fries tossed in peri peri spice.",p:99,c:"Sides",i:"peri-peri-fries"},
+ {id:9,n:"Chicken Nuggets",d:"Eight crunchy bites with dip.",p:159,c:"Sides",i:"nuggets"},
+ {id:10,n:"Pista Shake",d:"Thick pistachio milkshake, cold and creamy.",p:139,c:"Drinks",i:"pista-shake"},
+ {id:11,n:"Cold Coffee",d:"Chilled coffee with a scoop of ice cream.",p:119,c:"Drinks",i:"cold-coffee"},
+ {id:12,n:"Fizzy Lime Soda",d:"Fresh lime, mint and sparkling water.",p:79,c:"Drinks",i:"lime-soda"}
+];
+const CATS=["All","Burgers","Pizza","Sides","Drinks"];
+document.addEventListener("error",e=>{if(e.target.tagName==="IMG")e.target.remove()},true);
+const $=id=>document.getElementById(id);
+let cart={}, cat="All", tt;
+
+$("mq").innerHTML=("<span>Burgers</span><span>Pizza</span><span>Fries</span><span>Shakes</span><span>Hot dogs</span>").repeat(8);
+
+function renderTabs(){
+  $("tabs").innerHTML=CATS.map(c=>`<button class="tab" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");
+}
+function renderGrid(){
+  const list=MENU.filter(m=>cat==="All"||m.c===cat);
+  $("grid").innerHTML=list.map((m,i)=>`
+   <article class="card" style="animation-delay:${i*60}ms">
+     <div class="pic ph" data-label="${m.n}"><img src="images/${m.i}.jpg" alt="${m.n}" loading="lazy"></div>
+     <h3>${m.n}</h3><p>${m.d}</p>
+     <div class="row"><span class="price">₹${m.p}</span><button class="add" data-id="${m.id}">Add to cart</button></div>
+   </article>`).join("");
+}
+function renderCart(){
+  const rows=Object.keys(cart).map(id=>{const m=MENU.find(x=>x.id==id),q=cart[id];
+    return `<div class="item"><div class="e ph" data-i="${m.n[0]}"><img src="images/${m.i}.jpg" alt="${m.n}"></div><div><b>${m.n}</b><small>₹${m.p*q}</small></div>
+    <div class="qty"><button data-d="-1" data-id="${id}" aria-label="Remove one">−</button><span>${q}</span><button data-d="1" data-id="${id}" aria-label="Add one">+</button></div></div>`}).join("");
+  $("items").innerHTML=rows||`<div class="empty"><p>Your cart is empty.<br>Add something tasty from the menu.</p></div>`;
+  const n=Object.values(cart).reduce((a,b)=>a+b,0);
+  const t=Object.keys(cart).reduce((a,id)=>a+MENU.find(x=>x.id==id).p*cart[id],0);
+  $("count").textContent=n; $("total").textContent="₹"+t; $("pay").disabled=!n;
+  $("count").classList.remove("bump"); void $("count").offsetWidth; $("count").classList.add("bump");
+}
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),1800)}
+function drawer(on){$("drawer").classList.toggle("on",on);$("veil").classList.toggle("on",on)}
+
+$("tabs").onclick=e=>{const b=e.target.closest(".tab");if(!b)return;cat=b.dataset.c;renderTabs();renderGrid()};
+$("grid").onclick=e=>{const b=e.target.closest(".add");if(!b)return;const id=b.dataset.id;cart[id]=(cart[id]||0)+1;renderCart();toast("Added "+MENU.find(x=>x.id==id).n)};
+$("items").onclick=e=>{const b=e.target.closest("[data-d]");if(!b)return;const id=b.dataset.id;cart[id]+=+b.dataset.d;if(cart[id]<1)delete cart[id];renderCart()};
+$("openCart").onclick=()=>drawer(true);
+$("closeCart").onclick=$("veil").onclick=()=>drawer(false);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")drawer(false)});
+$("pay").onclick=()=>{cart={};renderCart();drawer(false);toast("Order placed! Your food is on the way")};
+
+renderTabs();renderGrid();renderCart();
+document.querySelectorAll("img").forEach(i=>{if(i.complete&&!i.naturalWidth)i.remove()});
+</script>
+</body>
+</html>

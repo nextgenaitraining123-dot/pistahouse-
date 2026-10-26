@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pista House – Junk Food, Done Right</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pista:#a8d672; --pista-d:#7fb83e; --forest:#14452f; --ink:#0e2a1c;
+  --mint:#eaf6da; --paper:#fbfff5; --chili:#ff6b35; --muted:#5a7565;
+  --display:"Fredoka","Trebuchet MS",system-ui,sans-serif;
+  --body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:22px;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);scroll-padding-top:90px}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.55}
+button{font:inherit;cursor:pointer;border:0}
+:focus-visible{outline:3px solid var(--chili);outline-offset:3px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+
+/* header */
+.nav{position:sticky;top:0;z-index:20;background:rgba(251,255,245,.9);backdrop-filter:blur(10px);border-bottom:1px solid #dcebc6}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+.logo{font-family:var(--display);font-weight:700;font-size:1.6rem;color:var(--forest);text-decoration:none;display:flex;gap:8px;align-items:center}
+.logo i{font-style:normal;background:var(--pista);border-radius:50%;width:38px;height:38px;display:grid;place-items:center;font-size:1.25rem}
+.links{display:flex;gap:26px}
+.links a{color:var(--forest);text-decoration:none;font-weight:500}
+.links a:hover{color:var(--chili)}
+.cart-btn{background:var(--forest);color:#fff;padding:10px 18px;border-radius:99px;font-weight:600;display:flex;gap:10px;align-items:center;transition:transform .2s}
+.cart-btn:hover{transform:translateY(-2px)}
+.cart-btn b{background:var(--pista);color:var(--ink);min-width:24px;height:24px;border-radius:99px;display:grid;place-items:center;font-size:.85rem}
+.bump{animation:bump .4s}
+@keyframes bump{40%{transform:scale(1.35)}}
+
+/* hero */
+.hero{background:var(--pista);position:relative;overflow:hidden;padding:80px 0 110px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center}
+.hero h1{font-family:var(--display);font-size:clamp(2.8rem,7vw,5.4rem);line-height:.98;color:var(--forest);font-weight:700;letter-spacing:-.02em}
+.hero p{max-width:440px;margin:22px 0 30px;font-size:1.1rem;color:#1d4a33}
+.cta{display:inline-block;background:var(--forest);color:#fff;text-decoration:none;padding:16px 30px;border-radius:99px;font-weight:700;box-shadow:0 8px 0 #0b2a1c;transition:transform .15s,box-shadow .15s}
+.cta:hover{transform:translateY(4px);box-shadow:0 4px 0 #0b2a1c}
+.cta2{margin-left:14px;color:var(--forest);font-weight:600;text-decoration:underline;text-underline-offset:4px}
+.stack{position:relative;height:450px}
+.ph{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--pista-d),var(--forest))}
+.ph::before{content:attr(data-label);position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:8px;color:var(--mint);font-family:var(--display);font-weight:600;line-height:1.2}
+.ph img{position:relative;z-index:1;display:block;width:100%;height:100%;object-fit:cover}
+.stack .ph{position:absolute;width:var(--z);height:var(--z);border-radius:50%;border:6px solid #fff;box-shadow:0 18px 34px rgba(14,42,28,.25);opacity:0;animation:drop .7s cubic-bezier(.3,1.5,.6,1) forwards,float 4s ease-in-out infinite}
+.stack .s0{--z:250px;left:30%;top:2%;animation-delay:.1s,.9s}
+.stack .s1{--z:170px;left:0;top:44%;animation-delay:.35s,1.2s}
+.stack .s2{--z:190px;left:60%;top:42%;animation-delay:.6s,1.5s}
+.stack .s3{--z:130px;left:38%;top:72%;animation-delay:.85s,1.8s}
+.blob{position:absolute;inset:8% 6%;background:var(--mint);border-radius:50% 45% 55% 50%;animation:morph 9s ease-in-out infinite}
+@keyframes drop{from{opacity:0;transform:translateY(-120px) rotate(-30deg)}to{opacity:1;transform:none}}
+@keyframes float{50%{transform:translateY(-14px) rotate(4deg)}}
+@keyframes morph{50%{border-radius:40% 60% 45% 55%;transform:rotate(6deg)}}
+
+/* marquee */
+.marquee{background:var(--forest);color:var(--pista);overflow:hidden;white-space:nowrap;padding:14px 0;font-family:var(--display);font-size:1.3rem;font-weight:600}
+.marquee div{display:inline-block;animation:slide 24s linear infinite}
+.marquee span{margin-left:26px}
+.marquee span::after{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--pista);margin-left:26px}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* menu */
+section{padding:80px 0}
+h2{font-family:var(--display);font-size:clamp(2rem,4vw,3rem);color:var(--forest);line-height:1.1}
+.sub{color:var(--muted);margin:8px 0 28px;max-width:480px}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px}
+.tab{background:var(--mint);color:var(--forest);padding:10px 22px;border-radius:99px;font-weight:600;transition:background .2s,color .2s}
+.tab:hover{background:#d7ecb9}
+.tab[aria-pressed=true]{background:var(--forest);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
+.card{background:#fff;border:2px solid #e1efcd;border-radius:var(--r);padding:20px;display:flex;flex-direction:column;transition:transform .25s,border-color .25s,box-shadow .25s;animation:pop .45s backwards}
+.card:hover{transform:translateY(-6px);border-color:var(--pista-d);box-shadow:0 14px 28px rgba(20,69,47,.12)}
+@keyframes pop{from{opacity:0;transform:scale(.92) translateY(14px)}}
+.pic{height:170px;border-radius:16px;margin-bottom:16px}
+.pic img{transition:transform .5s}
+.card:hover .pic img{transform:scale(1.08)}
+.card h3{font-family:var(--display);font-size:1.25rem;color:var(--forest)}
+.card p{font-size:.92rem;color:var(--muted);margin:4px 0 16px;flex:1}
+.row{display:flex;justify-content:space-between;align-items:center}
+.price{font-family:var(--display);font-size:1.4rem;font-weight:700;color:var(--chili)}
+.add{background:var(--pista);color:var(--ink);padding:10px 16px;border-radius:99px;font-weight:700;transition:background .2s,transform .15s}
+.add:hover{background:var(--forest);color:#fff}
+.add:active{transform:scale(.92)}
+
+/* offer */
+.offer{background:var(--mint)}
+.offer .box{background:var(--forest);color:#fff;border-radius:34px;padding:48px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;position:relative;overflow:hidden}
+.offer h2{color:#fff}
+.offer p{color:#cfe8b8;margin-top:8px}
+.code{font-family:var(--display);font-size:1.6rem;background:var(--pista);color:var(--ink);padding:14px 26px;border-radius:16px;border:2px dashed var(--forest);outline:3px solid var(--pista);animation:pulse 2.4s infinite}
+@keyframes pulse{50%{transform:scale(1.05) rotate(-2deg)}}
+
+/* footer */
+footer{background:var(--ink);color:#b9d3a6;padding:50px 0 30px}
+footer .wrap{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+footer h4{font-family:var(--display);color:var(--pista);margin-bottom:8px}
+.copy{text-align:center;margin-top:34px;font-size:.85rem;opacity:.7}
+
+/* cart drawer */
+.veil{position:fixed;inset:0;background:rgba(14,42,28,.5);opacity:0;pointer-events:none;transition:opacity .3s;z-index:30}
+.veil.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(400px,100%);background:var(--paper);z-index:40;transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.9,.3,1);display:flex;flex-direction:column;padding:22px;padding-top:calc(22px + env(safe-area-inset-top,0px))}
+.drawer.on{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.dh h3{font-family:var(--display);font-size:1.6rem;color:var(--forest)}
+.x{background:var(--mint);width:38px;height:38px;border-radius:50%;font-size:1.1rem}
+.items{flex:1;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.item{display:grid;grid-template-columns:54px 1fr auto;gap:12px;align-items:center;background:#fff;border:1px solid #e1efcd;border-radius:16px;padding:10px;animation:pop .35s}
+.item .e{border-radius:12px;height:54px}
+.item .e::before{content:attr(data-i);font-size:1.3rem}
+.item b{display:block;font-size:.95rem;color:var(--forest)}
+.item small{color:var(--chili);font-weight:700}
+.qty{display:flex;align-items:center;gap:8px}
+.qty button{width:28px;height:28px;border-radius:50%;background:var(--pista);font-weight:700}
+.empty{text-align:center;color:var(--muted);margin-top:60px}
+.foot{border-top:2px dashed #cfe3b5;padding-top:16px;margin-top:12px}
+.tot{display:flex;justify-content:space-between;font-family:var(--display);font-size:1.4rem;color:var(--forest);margin-bottom:14px}
+.pay{width:100%;background:var(--chili);color:#fff;padding:15px;border-radius:99px;font-weight:700;font-size:1.05rem}
+.pay:disabled{opacity:.4;cursor:not-allowed}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,120px);background:var(--forest);color:#fff;padding:12px 22px;border-radius:99px;z-index:50;transition:transform .35s cubic-bezier(.3,1.5,.6,1);font-weight:600}
+.toast.on{transform:translate(-50%,0)}
+
+@media(max-width:800px){
+  .links{display:none}
+  .hero .wrap{grid-template-columns:1fr}
+  .stack{height:340px}.stack .s0{--z:170px}.stack .s1{--z:115px}.stack .s2{--z:125px}.stack .s3{--z:90px}
+  .offer .box{padding:30px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.stack .ph{opacity:1}}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a href="#top" class="logo"><i>P</i>Pista House</a>
+    <nav class="links" aria-label="Main">
+      <a href="#menu">Menu</a><a href="#offer">Offers</a><a href="#contact">Contact</a>
+    </nav>
+    <button class="cart-btn" id="openCart" aria-label="Open cart">🛒 Cart <b id="count">0</b></button>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Crispy. Cheesy. Totally green-lit.</h1>
+        <p>Burgers, pizzas and loaded fries made fresh and delivered hot. Pick what you crave and we will handle the rest.</p>
+        <a href="#menu" class="cta">Order now</a><a href="#offer" class="cta2">See today’s offer</a>
+      </div>
+      <div class="stack">
+        <div class="blob"></div>
+        <div class="ph s0" data-label="Smash burger"><img src="images/smash-burger.jpg" alt="Classic smash burger"></div>
+        <div class="ph s1" data-label="Pizza"><img src="images/margherita-pizza.jpg" alt="Margherita pizza"></div>
+        <div class="ph s2" data-label="Fries"><img src="images/cheese-fries.jpg" alt="Loaded cheese fries"></div>
+        <div class="ph s3" data-label="Shake"><img src="images/pista-shake.jpg" alt="Pista shake"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true"><div id="mq"></div></div>
+
+  <section id="menu">
+    <div class="wrap">
+      <h2>Our menu</h2>
+      <p class="sub">Tap a category, then add your favourites to the cart.</p>
+      <div class="tabs" id="tabs"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="offer" id="offer">
+    <div class="wrap">
+      <div class="box">
+        <div>
+          <h2>Get 20% off your first order</h2>
+          <p>Use this code at checkout on orders above ₹300.</p>
+        </div>
+        <div class="code">PISTA20</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div><h4>Pista House</h4><p>Fresh junk food, made with love.</p></div>
+    <div><h4>Open daily</h4><p>11:00 AM – 11:30 PM</p></div>
+    <div><h4>Order by phone</h4><p>+91 00000 00000</p></div>
+  </div>
+  <p class="copy">© 2026 Pista House. All rights reserved.</p>
+</footer>
+
+<div class="veil" id="veil"></div>
+<aside class="drawer" id="drawer" aria-label="Your cart">
+  <div class="dh"><h3>Your cart</h3><button class="x" id="closeCart" aria-label="Close cart">✕</button></div>
+  <div class="items" id="items"></div>
+  <div class="foot">
+    <div class="tot"><span>Total</span><span id="total">₹0</span></div>
+    <button class="pay" id="pay" disabled>Place order</button>
+  </div>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const MENU=[
+ {id:1,n:"Classic Smash Burger",d:"Double smashed patty, cheese, pickles.",p:149,c:"Burgers",i:"smash-burger"},
+ {id:2,n:"Crispy Chicken Burger",d:"Golden fried chicken with spicy mayo.",p:179,c:"Burgers",i:"chicken-burger"},
+ {id:3,n:"Paneer Tikka Burger",d:"Grilled paneer, mint chutney, onions.",p:159,c:"Burgers",i:"paneer-burger"},
+ {id:4,n:"Margherita Pizza",d:"Tomato, mozzarella and fresh basil.",p:249,c:"Pizza",i:"margherita-pizza"},
+ {id:5,n:"Pepperoni Pizza",d:"Loaded with pepperoni and extra cheese.",p:299,c:"Pizza",i:"pepperoni-pizza"},
+ {id:6,n:"Farmhouse Pizza",d:"Capsicum, corn, olives and mushrooms.",p:279,c:"Pizza",i:"farmhouse-pizza"},
+ {id:7,n:"Loaded Cheese Fries",d:"Crinkle fries under molten cheese.",p:129,c:"Sides",i:"cheese-fries"},
+ {id:8,n:"Peri Peri Fries",d:"Crisp fries tossed in peri peri spice.",p:99,c:"Sides",i:"peri-peri-fries"},
+ {id:9,n:"Chicken Nuggets",d:"Eight crunchy bites with dip.",p:159,c:"Sides",i:"nuggets"},
+ {id:10,n:"Pista Shake",d:"Thick pistachio milkshake, cold and creamy.",p:139,c:"Drinks",i:"pista-shake"},
+ {id:11,n:"Cold Coffee",d:"Chilled coffee with a scoop of ice cream.",p:119,c:"Drinks",i:"cold-coffee"},
+ {id:12,n:"Fizzy Lime Soda",d:"Fresh lime, mint and sparkling water.",p:79,c:"Drinks",i:"lime-soda"}
+];
+const CATS=["All","Burgers","Pizza","Sides","Drinks"];
+document.addEventListener("error",e=>{if(e.target.tagName==="IMG")e.target.remove()},true);
+const $=id=>document.getElementById(id);
+let cart={}, cat="All", tt;
+
+$("mq").innerHTML=("<span>Burgers</span><span>Pizza</span><span>Fries</span><span>Shakes</span><span>Hot dogs</span>").repeat(8);
+
+function renderTabs(){
+  $("tabs").innerHTML=CATS.map(c=>`<button class="tab" aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");
+}
+function renderGrid(){
+  const list=MENU.filter(m=>cat==="All"||m.c===cat);
+  $("grid").innerHTML=list.map((m,i)=>`
+   <article class="card" style="animation-delay:${i*60}ms">
+     <div class="pic ph" data-label="${m.n}"><img src="images/${m.i}.jpg" alt="${m.n}" loading="lazy"></div>
+     <h3>${m.n}</h3><p>${m.d}</p>
+     <div class="row"><span class="price">₹${m.p}</span><button class="add" data-id="${m.id}">Add to cart</button></div>
+   </article>`).join("");
+}
+function renderCart(){
+  const rows=Object.keys(cart).map(id=>{const m=MENU.find(x=>x.id==id),q=cart[id];
+    return `<div class="item"><div class="e ph" data-i="${m.n[0]}"><img src="images/${m.i}.jpg" alt="${m.n}"></div><div><b>${m.n}</b><small>₹${m.p*q}</small></div>
+    <div class="qty"><button data-d="-1" data-id="${id}" aria-label="Remove one">−</button><span>${q}</span><button data-d="1" data-id="${id}" aria-label="Add one">+</button></div></div>`}).join("");
+  $("items").innerHTML=rows||`<div class="empty"><p>Your cart is empty.<br>Add something tasty from the menu.</p></div>`;
+  const n=Object.values(cart).reduce((a,b)=>a+b,0);
+  const t=Object.keys(cart).reduce((a,id)=>a+MENU.find(x=>x.id==id).p*cart[id],0);
+  $("count").textContent=n; $("total").textContent="₹"+t; $("pay").disabled=!n;
+  $("count").classList.remove("bump"); void $("count").offsetWidth; $("count").classList.add("bump");
+}
+function toast(msg){const t=$("toast");t.textContent=msg;t.classList.add("on");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("on"),1800)}
+function drawer(on){$("drawer").classList.toggle("on",on);$("veil").classList.toggle("on",on)}
+
+$("tabs").onclick=e=>{const b=e.target.closest(".tab");if(!b)return;cat=b.dataset.c;renderTabs();renderGrid()};
+$("grid").onclick=e=>{const b=e.target.closest(".add");if(!b)return;const id=b.dataset.id;cart[id]=(cart[id]||0)+1;renderCart();toast("Added "+MENU.find(x=>x.id==id).n)};
+$("items").onclick=e=>{const b=e.target.closest("[data-d]");if(!b)return;const id=b.dataset.id;cart[id]+=+b.dataset.d;if(cart[id]<1)delete cart[id];renderCart()};
+$("openCart").onclick=()=>drawer(true);
+$("closeCart").onclick=$("veil").onclick=()=>drawer(false);
+document.addEventListener("keydown",e=>{if(e.key==="Escape")drawer(false)});
+$("pay").onclick=()=>{cart={};renderCart();drawer(false);toast("Order placed! Your food is on the way")};
+
+renderTabs();renderGrid();renderCart();
+document.querySelectorAll("img").forEach(i=>{if(i.complete&&!i.naturalWidth)i.remove()});
+</script>
+</body>
+</html>
